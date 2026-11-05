@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trắc Nộ Vui Nhộn</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Times New Roman', Times, serif, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f0f0f0;
+    }
+
+    /* Khung màn hình chung */
+    .screen {
+      display: none;
+      width: 100vw;
+      min-height: 100vh;
+      padding: 40px 20px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .active {
+      display: flex;
+    }
+
+    /* Màn hình 1: Trắng */
+    #screen1 {
+      background-color: #ffffff;
+      color: #000;
+    }
+
+    .question-title {
+      font-size: 2rem;
+      text-align: center;
+      max-width: 800px;
+      margin-bottom: 50px;
+      line-height: 1.4;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .option-btn {
+      display: flex;
+      align-items: center;
+      border: 3px solid #000;
+      background: #fff;
+      padding: 10px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 1.2rem;
+      font-weight: bold;
+      transition: transform 0.1s, background-color 0.2s;
+    }
+
+    .option-btn:hover {
+      background-color: #f5f5f5;
+      transform: scale(1.02);
+    }
+
+    .option-btn img {
+      width: 140px;
+      height: 80px;
+      object-fit: cover;
+      margin-right: 15px;
+      border: 1px solid #ccc;
+    }
+
+    /* Màn hình 2: Đỏ */
+    #screen2 {
+      background-color: #e51c24;
+      color: #000;
+    }
+
+    /* Màn hình 3: Xanh lá */
+    #screen3 {
+      background-color: #27ae60;
+      color: #000;
+    }
+
+    .result-title {
+      font-size: 2.2rem;
+      text-align: center;
+      max-width: 900px;
+      margin-bottom: 30px;
+      font-weight: bold;
+    }
+
+    .sub-korean {
+      align-self: flex-end;
+      margin-right: 10%;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+    }
+
+    .result-img-container {
+      max-width: 600px;
+      width: 90%;
+      border: 4px solid #fff;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+
+    .result-img-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .btn-reset {
+      margin-top: 30px;
+      padding: 10px 25px;
+      font-size: 1rem;
+      background: #fff;
+      border: 2px solid #000;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MÀN HÌNH 1: CÂU HỎI -->
+  <div id="screen1" class="screen active">
+    <h1 class="question-title">
+      Câu hỏi, nếu chọn 1 phương tiện để đi học thêm môn Ngữ Văn vào thứ 4 và thứ 6 bạn sẽ chọn phương tiện nào?
+    </h1>
+
+    <div class="options-grid">
+      <div class="option-btn" onclick="chooseWrong()">
+        <img src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=400&q=80" alt="Revuelto">
+        <span>A. Lamborghini Revuelto</span>
+      </div>
+
+      <div class="option-btn" onclick="chooseWrong()">
+        <img src="https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=400&q=80" alt="Aventador SVJ">
+        <span>C. Lamborghini Aventador SVJ</span>
+      </div>
+
+      <div class="option-btn" onclick="chooseWrong()">
+        <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=400&q=80" alt="Bugatti Veyron">
+        <span>B. Bugati Veyron</span>
+      </div>
+
+      <div class="option-btn" onclick="chooseCorrect()">
+        <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=400&q=80" alt="Wave">
+        <span>D. Con Wave Tàu Màu Trắng Có Rổ Rẻ Rách</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MÀN HÌNH 2: THẤT BẠI (MÀU ĐỎ) -->
+  <div id="screen2" class="screen">
+    <h1 class="result-title">Tiếc Quá Bạn Đã Trả Lời Sai Mất Rồi =((((((((((((((</h1>
+    <div class="result-img-container">
+      <img src="2.jpg" alt="Sai rồi" onerror="this.src='https://via.placeholder.com/600x400/e51c24/ffffff?text=Anh+Photo+Time+Do'">
+    </div>
+    <button class="btn-reset" onclick="resetQuiz()">Chọn lại</button>
+  </div>
+
+  <!-- MÀN HÌNH 3: CHIẾN THẮNG (MÀU XANH LÁ) -->
+  <div id="screen3" class="screen">
+    <h1 class="result-title">
+      Xin Chúc Mừng Các Bạn Đã Chiến Thắng Câu Hỏi Dành Cho Học Sinh Đại Học Bách Khoa Hà Nội Này, Bạn Là 1 Người Có IQ Trên 67 =)))))))))))
+    </h1>
+    <div class="sub-korean">코르티스는 손흥민보다 노래를 더 잘한다.</div>
+    <div class="result-img-container">
+      <img src="3.jpg" alt="Đúng rồi" onerror="this.src='https://via.placeholder.com/600x300/27ae60/ffffff?text=Anh+Chuc+Mung'">
+    </div>
+    <button class="btn-reset" onclick="resetQuiz()">Chơi lại</button>
+  </div>
+
+  <script>
+    // Hàm tạo âm thanh bằng Web Audio API (Không cần tải file bên ngoài)
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      if (type === 'wrong') {
+        // Âm thanh thất bại / nhắng nhít (Còi hỏng / tiếng tụt dốc)
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.6);
+        
+        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.6);
+
+      } else if (type === 'correct') {
+        // Âm thanh chiến thắng vui nhộn (Melody chiến thắng)
+        const notes = [261.63, 329.63, 392.00, 523.25, 659.25]; // C E G C E
+        notes.forEach((freq, index) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.value = freq;
+          
+          const startTime = audioCtx.currentTime + index * 0.1;
+          gain.gain.setValueAtTime(0.3, startTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, startTime + 0.2);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(startTime);
+          osc.stop(startTime + 0.2);
+        });
+      }
+    }
+
+    // Xử lý chuyển màn hình
+    function chooseWrong() {
+      document.getElementById('screen1').classList.remove('active');
+      document.getElementById('screen2').classList.add('active');
+      playSound('wrong');
+    }
+
+    function chooseCorrect() {
+      document.getElementById('screen1').classList.remove('active');
+      document.getElementById('screen3').classList.add('active');
+      playSound('correct');
+    }
+
+    function resetQuiz() {
+      document.getElementById('screen2').classList.remove('active');
+      document.getElementById('screen3').classList.remove('active');
+      document.getElementById('screen1').classList.add('active');
+    }
+  </script>
+</body>
+</html>
